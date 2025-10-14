@@ -176,7 +176,7 @@ function App() {
         )}
 
         {gameOver && !won && (
-          <button onClick={handleRestart} className="restart-btn">
+          <button onClick={() => handleRestart()} className="restart-btn">
             Play Again
           </button>
         )}
