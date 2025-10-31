@@ -25,3 +25,16 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

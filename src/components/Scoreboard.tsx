@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './_scoreboard.scss';
 
 interface Score {
   name: string;
@@ -8,14 +9,13 @@ interface Score {
 }
 
 interface ScoreboardProps {
-  refreshTrigger?: number; // optional — parent can bump this to force reload
+  refreshTrigger?: number;
 }
 
 export default function Scoreboard({ refreshTrigger }: ScoreboardProps) {
   const [scores, setScores] = useState<Score[]>([]);
   const [totalGames, setTotalGames] = useState(0);
 
-  // load scores + totalGames from localStorage whenever refreshTrigger changes
   useEffect(() => {
     const savedScores = JSON.parse(
       localStorage.getItem('scores') || '[]'
@@ -38,7 +38,7 @@ export default function Scoreboard({ refreshTrigger }: ScoreboardProps) {
   return (
     <div className="scoreboard">
       <button
-        className="clear-btn"
+        className="scoreboard__clear-btn"
         onClick={handleClearScores}
         title="Clear scoreboard"
         aria-label="Clear scoreboard"
@@ -65,9 +65,9 @@ export default function Scoreboard({ refreshTrigger }: ScoreboardProps) {
           .sort((a, b) => b.score - a.score)
           .slice(0, 10)
           .map((s, i) => (
-            <li key={i} className="score-row">
+            <li key={i} className="scoreboard__score-row">
               <strong>{s.name}</strong>
-              <span className="score-meta">
+              <span className="scoreboard__score-meta">
                 {s.score} pts{s.difficulty ? ` · ${s.difficulty}` : ''} ·{' '}
                 {s.attempts} tries
               </span>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Scoreboard from './components/Scoreboard';
-import './App.css';
+import './styles/_app.scss';
 
 function App() {
   type Difficulty = 'Easy' | 'Medium' | 'Hard';
@@ -17,7 +17,7 @@ function App() {
   const [name, setName] = useState('');
   const [won, setWon] = useState(false);
   const [scoreSaved, setScoreSaved] = useState(false);
-  const [refresh, setRefresh] = useState(0); // trigger scoreboard refresh
+  const [refresh, setRefresh] = useState(0);
   const savedDifficulty =
     (localStorage.getItem('difficulty') as Difficulty) || 'Medium';
   const [difficulty, setDifficulty] = useState<Difficulty>(savedDifficulty);
@@ -36,17 +36,13 @@ function App() {
   );
 
   const handleDifficultyChange = (selected: Difficulty) => {
-    // Save the difficulty to localStorage
     localStorage.setItem('difficulty', selected);
 
-    // Update states
     setDifficulty(selected);
     const settings = difficultySettings[selected];
     setMaxNumber(settings.maxNumber);
     setMaxAttempts(settings.maxAttempts);
     setMaxScore(settings.maxScore);
-
-    // Restart the game for the new range
     handleRestart(settings.maxNumber);
   };
 
@@ -90,13 +86,12 @@ function App() {
   const handleSaveScore = () => {
     if (!name.trim() || scoreSaved) return;
 
-    // Dynamic scoring based on difficulty
     const baseScore = maxScore;
     const deductionPerAttempt = baseScore / maxAttempts;
     const score = Math.max(
       baseScore - (attempts - 1) * deductionPerAttempt,
       50
-    ); // floor score = 50
+    );
 
     const newScore = { name, score: Math.round(score), attempts, difficulty };
     const scores = JSON.parse(localStorage.getItem('scores') || '[]');
@@ -124,10 +119,10 @@ function App() {
 
   return (
     <div className="app">
-      <div className="difficulty-selector">
+      <div className="app__difficulty-selector">
         <h3>Difficulty: </h3>
         <select
-          name="difficulty"
+          name="app__difficulty"
           value={difficulty}
           onChange={(e) => handleDifficultyChange(e.target.value as Difficulty)}
         >
@@ -136,12 +131,12 @@ function App() {
           <option value="Hard">Hard (1–200)</option>
         </select>
       </div>
-      <div className="game-area">
+      <div className="app__game-area">
         <h1>Number Guessing Game</h1>
         <p>{message}</p>
 
         {!gameOver && (
-          <div className="input-area">
+          <div className="app__input-area">
             <input
               type="number"
               value={guess}
@@ -163,7 +158,7 @@ function App() {
         </p>
 
         {gameOver && won && !scoreSaved && (
-          <div className="save-score">
+          <div className="app__save-score">
             <p>You won in {attempts} attempts!</p>
             <input
               type="text"
@@ -176,7 +171,7 @@ function App() {
         )}
 
         {gameOver && !won && (
-          <button onClick={() => handleRestart()} className="restart-btn">
+          <button onClick={() => handleRestart()} className="app__restart-btn">
             Play Again
           </button>
         )}
