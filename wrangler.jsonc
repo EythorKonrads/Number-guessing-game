@@ -1,0 +1,11 @@
+{
+  "name": "guesser",
+  "compatibility_date": "2026-11-01",
+  // The site only lives on its own domain; PR previews get their own URLs
+  "workers_dev": false,
+  "preview_urls": true,
+  "routes": [{ "pattern": "guesser.eythorkonrads.com", "custom_domain": true }],
+  "assets": {
+    "directory": "./dist",
+  },
+}
